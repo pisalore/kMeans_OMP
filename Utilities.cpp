@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <fstream>
 #include "Utilities.h"
 #include "Point.h"
 #include "Cluster.h"
@@ -57,7 +58,8 @@ void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters) {
         minDistance = euclideianDistance(point, clusters[0]);
 
         for (int j = 1; j < clustersSize; j++) {
-            double distance = euclideianDistance(point, clusters[j]);
+            Cluster &cluster = clusters[j];
+            double distance = euclideianDistance(point, cluster);
             if (distance < minDistance) {
                 minDistance = distance;
                 clusterIndex = j;
@@ -85,3 +87,14 @@ bool findNewCentroids(vector<Cluster> &clusters) {
     return isConvergence;
 }
 
+void plotClusters(vector<Point> &points) {
+    ofstream outfile("data.txt");
+    for (int i = 0; i < points.size(); i++) {
+        Point point = points[i];
+        outfile << point.get_x_coordinate() << " " << point.get_y_coordinate() << " " << point.get_cluster_id()
+                << std::endl;
+    }
+    outfile.close();
+    system("gnuplot -p -e \"plot 'data.txt' using 1:2:3 with points palette notitle\"");
+    remove("data.txt");
+}
