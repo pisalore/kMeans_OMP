@@ -52,6 +52,30 @@ public:
     void accumulateClusterPoints(Point point) {
         this->x_cluster_accumulator += point.get_x_coordinate();
         this->y_cluster_accumulator += point.get_y_coordinate();
+        this->size += 1;
+    }
+
+    bool updateClusterCentroid(){
+        double x_accumulator = this->x_cluster_accumulator;
+        double y_accumulator = this->y_cluster_accumulator;
+        double x_coord = this->x_cluster_coordinate;
+        double y_coord = this->y_cluster_coordinate;
+        int size = this->size;
+
+        if(x_coord == x_accumulator / size && y_coord == y_accumulator / size) {
+            return false;
+        }
+        else {
+            this->x_cluster_coordinate = x_accumulator / size;
+            this->y_cluster_coordinate = y_accumulator / size;
+            return true;
+        }
+    }
+
+    void resetClusterAccumulator(){
+        this->x_cluster_accumulator = 0;
+        this->y_cluster_accumulator = 0;
+        this->size = 0;
     }
 };
 

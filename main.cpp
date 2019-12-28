@@ -1,5 +1,8 @@
+//
+// Created by lorenzo on 27/12/19.
+//
+
 #include <iostream>
-// OpenMP header
 #include <omp.h>
 
 #include <stdio.h>
@@ -10,12 +13,8 @@
 #include "csvio.h"
 #include "Utilities.h"
 
-#include <algorithm> // for copy() and assign()
-#include <iterator> // for back_inserter
 
-
-
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[]) {
     const int clusters_number = 3;
     const double max_random_range = 20;
     std::string filename = "../datasets/dataset1000.csv";
@@ -23,7 +22,10 @@ int main(int argc, char* argv[]){
     //building points array to be clustered and random clusters
     vector<Point> points = initializePointsFromFile(filename);
     vector<Cluster> clusters = initializeClusters(clusters_number, max_random_range);
+    for (int i = 1; i < 3; i++) {
+        calculateAllDistances(points, clusters);
+        findNewCentroids(clusters);
+    }
 
-
-
+    int i = 0;
 }

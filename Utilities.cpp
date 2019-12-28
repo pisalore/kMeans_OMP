@@ -56,7 +56,7 @@ void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters) {
         Point &point = points[i];
         minDistance = euclideianDistance(point, clusters[0]);
 
-        for (int j = 0; j < clustersSize; j++) {
+        for (int j = 1; j < clustersSize; j++) {
             double distance = euclideianDistance(point, clusters[j]);
             if (distance < minDistance) {
                 minDistance = distance;
@@ -73,5 +73,15 @@ double euclideianDistance(Point point, Cluster cluster) {
                            + pow(point.get_y_coordinate() - cluster.get_y_cluster_coordinate(), 2));
 
     return distance;
-
 }
+
+bool findNewCentroids(vector<Cluster> &clusters) {
+    bool isConvergence = false;
+    for (int i = 0; i < clusters.size(); i++) {
+        isConvergence = clusters[i].updateClusterCentroid();
+        clusters[i].resetClusterAccumulator();
+    }
+
+    return isConvergence;
+}
+

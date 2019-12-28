@@ -16,6 +16,8 @@ std::vector<Point> initializePointsFromFile(string filename);
 std::vector<Cluster> initializeClusters(int number_of_cluster, int max_range);
 void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters);
 double euclideianDistance(Point point, Cluster cluster);
+bool findNewCentroids(vector<Cluster> &clusters);
+
 
 
 #endif //KMEANS_OMP_UTILITIES_H
