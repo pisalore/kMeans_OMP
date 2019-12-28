@@ -48,6 +48,11 @@ public:
     void set_y_cluster_coordinate(double y){
         this->y_cluster_coordinate = y;
     }
+
+    void accumulateClusterPoints(Point point) {
+        this->x_cluster_accumulator += point.get_x_coordinate();
+        this->y_cluster_accumulator += point.get_y_coordinate();
+    }
 };
 
 #endif //KMEANS_OMP_CLUSTER_H

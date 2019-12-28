@@ -46,7 +46,7 @@ public:
         this->y = y_coord;
     }
 
-    void set_clster_id(int id){
+    void set_cluster_id(int id){
         this->cluster_id = id;
     }
 

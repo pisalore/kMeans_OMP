@@ -14,7 +14,8 @@ using namespace std;
 
 std::vector<Point> initializePointsFromFile(string filename);
 std::vector<Cluster> initializeClusters(int number_of_cluster, int max_range);
-void calculateDistance(Point p1, Point p2);
+void calculateAllDistances(Point p1, Point p2);
+double euclideianDistance(Point point, Cluster cluster);
 
 
 #endif //KMEANS_OMP_UTILITIES_H
