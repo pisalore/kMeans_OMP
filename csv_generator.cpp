@@ -19,7 +19,7 @@
 
 
 
-int main() {
+int main1() {
     const int nData = 1000000;  // number of experiments
 
     std::default_random_engine generator;

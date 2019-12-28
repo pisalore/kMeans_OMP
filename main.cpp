@@ -9,7 +9,7 @@
 #include "Utilities.h"
 
 
-int main1(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     const int clusters_number = 3;
     const double max_random_range = 20;
     const double max_iterations = 100;
@@ -21,10 +21,14 @@ int main1(int argc, char *argv[]) {
     //building points array to be clustered and random clusters
     vector<Point> points = initializePointsFromFile(filename);
     vector<Cluster> clusters = initializeClusters(clusters_number, max_random_range);
+    double startTime = omp_get_wtime();
     while (isNotConvergence && numIterations < max_iterations) {
         calculateAllDistances(points, clusters);
         isNotConvergence = findNewCentroids(clusters);
     }
+    double endTime = omp_get_wtime();
+    std::cout << "K Means ended in " << endTime - startTime << "s" << std::endl;
+    std::cout<< "Clusters found:" << std::endl;
     for (int i = 0; i < clusters.size(); i++) {
         std::cout << "Cluster " << i << ": " << "(" << clusters[i].get_x_cluster_coordinate() << ", "
                   << clusters[i].get_y_cluster_coordinate() << ")" << std::endl;
