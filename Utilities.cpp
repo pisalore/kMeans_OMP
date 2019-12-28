@@ -98,3 +98,16 @@ void plotClusters(vector<Point> &points) {
     system("gnuplot -p -e \"plot 'data.txt' using 1:2:3 with points palette notitle\"");
     remove("data.txt");
 }
+
+void plotCentroids(vector<Cluster> &clusters){
+    ofstream outfile("centroids.txt");
+    for (int i = 0; i < clusters.size(); i++) {
+        Cluster cluster = clusters[i];
+        outfile << cluster.get_x_cluster_coordinate() << " "
+        << cluster.get_y_cluster_coordinate() << std::endl;
+    }
+    outfile.close();
+    system("gnuplot -p -e \"plot 'centroids.txt' notitle\"");
+    remove("centroids.txt");
+}
+

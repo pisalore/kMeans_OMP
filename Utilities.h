@@ -18,6 +18,7 @@ void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters);
 double euclideianDistance(Point point, Cluster cluster);
 bool findNewCentroids(vector<Cluster> &clusters);
 void plotClusters(vector<Point> &points);
+void plotCentroids(vector<Cluster> &clusters);
 
 
 

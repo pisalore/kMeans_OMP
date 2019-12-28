@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     bool isNotConvergence = true;
     int numIterations = 0;
 
-    std::string filename = "../datasets/dataset1000.csv";
+    std::string filename = "../datasets/dataset100000.csv";
 
     //building points array to be clustered and random clusters
     vector<Point> points = initializePointsFromFile(filename);
@@ -30,4 +30,6 @@ int main(int argc, char *argv[]) {
                   << clusters[i].get_y_cluster_coordinate() << ")" << std::endl;
     }
 
+    plotClusters(points);
+    plotCentroids(clusters);
 }
