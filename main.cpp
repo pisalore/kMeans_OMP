@@ -9,7 +9,7 @@
 #include "Utilities.h"
 
 
-int main(int argc, char *argv[]) {
+int main1(int argc, char *argv[]) {
     const int clusters_number = 3;
     const double max_random_range = 20;
     const double max_iterations = 100;
