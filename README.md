@@ -1,1 +1,2 @@
 # K-Means algorithm with OpenMP
+In this repository is presented the k means algorithm in his sequential version and in his parallel version using OpenMP. A performance analysis is discussed and presented.
