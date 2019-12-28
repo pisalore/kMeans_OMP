@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include <cstdlib>
-
+#include <cmath>
 #include "Utilities.h"
 #include "Point.h"
 #include "Cluster.h"
@@ -43,4 +43,24 @@ std::vector<Cluster> initializeClusters(int number_of_cluster, int max_range){
         ptr[i] = *cluster;
     }
     return clusters;
+}
+
+void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters){
+    int pointsSize = points.size();
+    int clustersSize = clusters.size();
+
+    double minDIstance = 0;
+    int clusterIndex = 0;
+
+    for(int i = 0; i < pointsSize; i ++) {
+        Point &point = points[i];
+    }
+}
+
+double EuclideianDIstance(Point point, Cluster cluster){
+    double distance = sqrt(pow(point.get_x_coordinate() - cluster.get_x_cluster_coordinate(), 2)
+            + pow(point.get_y_coordinate() - cluster.get_y_cluster_coordinate(), 2) );
+
+    return distance;
+
 }
