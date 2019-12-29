@@ -13,7 +13,7 @@ using namespace std;
 
 
 std::vector<Point> initializePointsFromFile(string filename);
-std::vector<Cluster> initializeClusters(int number_of_cluster, int max_range);
+std::vector<Cluster> initializeClusters(int number_of_cluster, vector<Point> &points);
 double euclideianDistance(Point point, Cluster cluster);
 void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters);
 bool findNewCentroids(vector<Cluster> &clusters);

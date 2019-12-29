@@ -19,6 +19,7 @@ public:
         this->y_cluster_coordinate = y;
         this->x_cluster_accumulator = 0;
         this->y_cluster_accumulator = 0;
+        this->size = 0;
     }
 
     Cluster(){
@@ -50,8 +51,11 @@ public:
     }
 
     void accumulateClusterPoints(Point point) {
+#pragma omp atomic
         this->x_cluster_accumulator += point.get_x_coordinate();
+#pragma omp atomic
         this->y_cluster_accumulator += point.get_y_coordinate();
+#pragma omp atomic
         this->size += 1;
     }
 
@@ -62,14 +66,14 @@ public:
         double y_coord = this->y_cluster_coordinate;
         int size = this->size;
 
-        if(x_coord == x_accumulator / size && y_coord == y_accumulator / size) {
+        if((x_coord == x_accumulator / size && y_coord == y_accumulator / size) || x_accumulator == 0 || y_accumulator == 0) {
             return false;
         }
-        else {
+
             this->x_cluster_coordinate = x_accumulator / size;
             this->y_cluster_coordinate = y_accumulator / size;
             return true;
-        }
+
     }
 
     void resetClusterAccumulator(){
