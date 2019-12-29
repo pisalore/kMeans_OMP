@@ -16,15 +16,15 @@ int main(int argc, char *argv[]) {
     bool isNotConvergence = true;
     int numIterations = 0;
 
-    std::string filename = "../datasets/dataset100000.csv";
+    std::string filename = "../datasets/dataset500000.csv";
 
     //building points array to be clustered and random clusters
     vector<Point> points = initializePointsFromFile(filename);
     vector<Cluster> clusters = initializeClusters(clusters_number, max_random_range);
     double startTime = omp_get_wtime();
     while (isNotConvergence && numIterations < max_iterations) {
-        calculateAllDistances(points, clusters);
-        isNotConvergence = findNewCentroids(clusters);
+        calculateAllDistancesParallel(points, clusters);
+        isNotConvergence = findNewCentroidsParallel(clusters);
     }
     double endTime = omp_get_wtime();
     std::cout << "K Means ended in " << endTime - startTime << "s" << std::endl;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Cluster " << i << ": " << "(" << clusters[i].get_x_cluster_coordinate() << ", "
                   << clusters[i].get_y_cluster_coordinate() << ")" << std::endl;
     }
-
+    std::cout << "Plotting results... "<< std::endl;
     plotClusters(points);
     plotCentroids(clusters);
 }

@@ -70,6 +70,31 @@ void calculateAllDistances(vector<Point> &points, vector<Cluster> &clusters) {
     }
 }
 
+void calculateAllDistancesParallel(vector<Point> &points, vector<Cluster> &clusters) {
+    int pointsSize = points.size();
+    int clustersSize = clusters.size();
+
+    double minDistance = 0;
+    int clusterIndex = 0;
+#pragma omp paralle for
+    for (int i = 0; i < pointsSize; i++) {
+        Point &point = points[i];
+        minDistance = euclideianDistance(point, clusters[0]);
+#pragma omp for
+        for (int j = 1; j < clustersSize; j++) {
+            Cluster &cluster = clusters[j];
+            double distance = euclideianDistance(point, cluster);
+            if (distance < minDistance) {
+                minDistance = distance;
+                clusterIndex = j;
+            }
+        }
+        points[i].set_cluster_id(clusterIndex);
+        clusters[clusterIndex].accumulateClusterPoints(points[i]);
+    }
+}
+
+
 double euclideianDistance(Point point, Cluster cluster) {
     double distance = sqrt(pow(point.get_x_coordinate() - cluster.get_x_cluster_coordinate(), 2)
                            + pow(point.get_y_coordinate() - cluster.get_y_cluster_coordinate(), 2));
@@ -87,6 +112,19 @@ bool findNewCentroids(vector<Cluster> &clusters) {
     return isConvergence;
 }
 
+bool findNewCentroidsParallel(vector<Cluster> &clusters) {
+    bool isConvergence = false;
+#pragma omp parallel
+#pragma omp for
+    for (int i = 0; i < clusters.size(); i++) {
+        isConvergence = clusters[i].updateClusterCentroid();
+        clusters[i].resetClusterAccumulator();
+    }
+
+    return isConvergence;
+}
+
+
 void plotClusters(vector<Point> &points) {
     ofstream outfile("data.txt");
     for (int i = 0; i < points.size(); i++) {
@@ -99,12 +137,12 @@ void plotClusters(vector<Point> &points) {
     remove("data.txt");
 }
 
-void plotCentroids(vector<Cluster> &clusters){
+void plotCentroids(vector<Cluster> &clusters) {
     ofstream outfile("centroids.txt");
     for (int i = 0; i < clusters.size(); i++) {
         Cluster cluster = clusters[i];
         outfile << cluster.get_x_cluster_coordinate() << " "
-        << cluster.get_y_cluster_coordinate() << std::endl;
+                << cluster.get_y_cluster_coordinate() << std::endl;
     }
     outfile.close();
     system("gnuplot -p -e \"plot 'centroids.txt' notitle\"");
