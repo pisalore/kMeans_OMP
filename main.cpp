@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     bool isNotConvergence = true;
     int numIterations = 0;
 
-    std::string filename = "../datasets/dataset200000.csv";
+    std::string filename = "../datasets/dataset1000.csv";
 
     //building points array to be clustered and random clusters
     vector<Point> points = initializePointsFromFile(filename);
